@@ -9,7 +9,12 @@ from tkinter import ttk
 
 def bmi_calories(age, gender, height, height_units, weight, weight_units, activity):
     # this function returns the bmi and recommended calorie intake per day in a tuple (bmi, calories)
-
+    
+    if height_units == 'cm': #this is to convert the height to 'm' if entered in 'cm'
+        height = float(height)/100
+    if weight_units == 'g':  #this is to convert the weight to 'kg' if entered in 'g'
+        weight = float(weight)/1000
+        
     bmi = round(float(weight) / float(height) ** 2, 2)
     calories = 3000
 
