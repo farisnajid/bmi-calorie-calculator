@@ -19,7 +19,7 @@ def bmi_calories(age, gender, height, height_units, weight, weight_units, activi
 
     activity_factor = activity_options[activity]
     BMR = (10 * float(weight)) + (6.25 * float(height) * 100) - (5 * age) + (5 if gender == 'male' else -161)
-    correction_factor = 1 if 18.5 <= bmi < 25 else 0.9 if bmi > 25 else 1.1
+    correction_factor = 1 if 18.5 <= bmi < 25 else 0.9 if bmi >= 25 else 1.1
 
     calories = int((BMR * activity_factor) * correction_factor)
 
