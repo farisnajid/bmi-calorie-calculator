@@ -16,7 +16,12 @@ def bmi_calories(age, gender, height, height_units, weight, weight_units, activi
         weight = float(weight)/1000
         
     bmi = round(float(weight) / float(height) ** 2, 2)
-    calories = 3000
+
+    activity_factor = activity_options[activity]
+    BMR = (10 * float(weight)) + (6.25 * float(height) * 100) - (5 * age) + (5 if gender == 'male' else -161)
+    correction_factor = 1 if 18.5 <= bmi < 25 else 0.9 if bmi > 25 else 1.1
+
+    calories = int((BMR * activity_factor) * correction_factor)
 
     return (bmi, calories)
 
@@ -66,10 +71,11 @@ def result_message():
     try:
 
         bmi = bmi_calories(age, gender, height, units_height, weight, units_weight, activity)[0]
+        comment = '(underweight)' if bmi < 18.5 else '(normal)' if bmi < 25 else '(overweight)' if bmi < 30 else '(obese)'
         calories = bmi_calories(age, gender, height, units_height, weight, units_weight, activity)[1]
         plan = meal_plan(calories)
 
-        text = 'Your BMI is {}.\nYou should consume {} calories per day.\n\n{}'.format(bmi, format(calories, ',d'),
+        text = 'Your BMI is {} {}.\nYou should consume {} calories per day.\n\n{}'.format(bmi, comment, format(calories, ',d'),
                                                                                        meal_plan_result(plan))
 
 
@@ -148,9 +154,11 @@ weight_units_options.grid(row=6, column=2, sticky=W)
 
 # activity
 activity_entry = tk.StringVar()
-activity_entry.set("Moderate")
-activity_options = ['Sedentary', 'Light', 'Moderate', 'Active']
-activity_dropdown = ttk.Combobox(window, textvariable=activity_entry, values=activity_options, state='readonly',
+activity_entry.set("Light (exercise 1-3 times/week)")
+activity_options = {'Sedentary (little or no exercise)': 1.2, 'Light (exercise 1-3 times/week)': 1.35, \
+                    'Moderate (exercise 4-5 times/week)': 1.5, 'Active (daily exercise)': 1.65, \
+                    'Very Active (intense daily exercise)': 1.8, 'Extra Active (very intense daily exercise)':1.95}
+activity_dropdown = ttk.Combobox(window, textvariable=activity_entry, values=[i for i in activity_options.keys()], state='readonly',
                                  justify=tk.CENTER, width=30)
 activity_dropdown.grid(row=7, column=1, columnspan=2, sticky=W)
 
