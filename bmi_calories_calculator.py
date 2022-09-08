@@ -1,5 +1,5 @@
 # import packages
-import requests
+# import requests
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -97,7 +97,7 @@ def reset():
 
     age_entry.set(20)
     gender_entry.set("male")
-    activity_entry.set("Moderate")
+    activity_entry.set("Active (daily exercise)")
     height_entry.delete(0, END)
     height_units.set('m')
     weight_entry.delete(0, END)
@@ -154,7 +154,7 @@ weight_units_options.grid(row=6, column=2, sticky=W)
 
 # activity
 activity_entry = tk.StringVar()
-activity_entry.set("Light (exercise 1-3 times/week)")
+activity_entry.set("Active (daily exercise)")
 activity_options = {'Sedentary (little or no exercise)': 1.2, 'Light (exercise 1-3 times/week)': 1.35, \
                     'Moderate (exercise 4-5 times/week)': 1.5, 'Active (daily exercise)': 1.65, \
                     'Very Active (intense daily exercise)': 1.8, 'Extra Active (very intense daily exercise)':1.95}
@@ -182,5 +182,7 @@ Button(window, text="reset", width=13, command=reset).grid(row=9, column=1, stic
 Button(window, text="calculate", width=13, command=result_message).grid(row=9, column=2, sticky=W)
 Button(window, text="close", width=13, command=close_program).grid(row=9, column=0, sticky=W)
 
-window.mainloop()
+#window.mainloop()
 
+if __name__ == "__main__":
+    window.mainloop()
